@@ -3,9 +3,51 @@
 <head>
     <meta charset="UTF-8">
     <title>黥</title>
+    <script type="text/javascript" src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.8.0.js"></script>
+    <script type="text/javascript">
+        //预览图片,参数说明：第一个参数：要预览的file对象，第二个参数：预览的img标签的id名称
+        function yl(obj,id) {
+            //FileReader
+            if(window.FileReader){
+                const reader = new FileReader();
+                const file = obj.files[0];
+                const regexImage=/^image\//;
+                if(regexImage.test(file.type)){
+                    //设置读取结束的回调函数
+                    reader.onload=function(data){
+                        var img=document.getElementById(id);
+                        img.src=data.target.result;
+
+                    };
+                    reader.readAsDataURL(file);
+                }else{
+                    alert("亲，看清楚是图片预览");
+
+                }
+            }else{
+                alert("亲，浏览器该升级了");
+
+            }
+        }
+    </script>
 </head>
+
 <body>
-Hello World
+<div id="toggle">
+    Hello World
+</div>
+
+<form id="up" action="fileup" method="post" enctype="multipart/form-data" style="display:none;">
+    <input type="file" name="f1" onchange="yl(this,'ylimg')"/>
+    <br/>
+    <img alt="图片预览" id="ylimg" width="400px" height="400px" src="http://img0.imgtn.bdimg.com/it/u=3687668824,2612815062&fm=26&gp=0.jpg"/>
+</form>
+
+<script type="text/javascript">
+    $("#toggle").click(function(){
+        $("#up").toggle();
+    })
+</script>
 </body>
 </html>
 
