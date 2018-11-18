@@ -5,3 +5,7 @@
     color: #666;
     background-color: #fff;
 }
+
+.preview_box img {
+    width: 200px;
+}
